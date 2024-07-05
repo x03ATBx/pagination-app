@@ -26,24 +26,24 @@ void paginateDocument(const string& inputFileName, const string& outputFileName)
         return;
     }
 
-    string line;
+    string word;
     string currentLine;
     int pageNumber = 1;
     int lineCount = 0;
 
-    while (inputFile >> line) {
-         // Check if adding the next word exceeds the max line length
-        if (currentLine.length() + line.length() + 1 > MAX_LINE_LENGTH) {
+    while (inputFile >> word) {
+        // Check if adding the next word exceeds the max line length
+        if (currentLine.length() + word.length() >= MAX_LINE_LENGTH) {
             // Output the current line and reset it
             outputFile << currentLine << endl;
-            currentLine = line;
+            currentLine = word;
             lineCount++;
         } else {
             // Add the word to the current line
             if (!currentLine.empty()) {
                 currentLine += " ";
             }
-            currentLine += line;
+            currentLine += word;
         }
 
         // Check if the max lines per page is reached
@@ -55,14 +55,19 @@ void paginateDocument(const string& inputFileName, const string& outputFileName)
     }
 
     // Output any remaining text
-    if (!currentLine.empty()) outputFile << currentLine << endl;
-    
-    // Output the final page number if there are any lines on the last page
-    if (lineCount > 0) outputFile << "=== Page " << pageNumber << " ===" << endl << endl;
+    if (!currentLine.empty()) {
+        outputFile << currentLine << endl;
 
+        // Output the final page number
+        outputFile << "=== Page " << pageNumber << " ===" << endl;
+    }
+    
     // Close the input and output files
     inputFile.close();
     outputFile.close();
+
+    // Notify the user of successful pagination
+    cout << "Document paginated successfully!" << endl;
 }
 
 
@@ -73,9 +78,6 @@ int main() {
 
     // Call the paginate function
     paginateDocument(inputFileName, outputFileName);
-
-    // Notify the user of successful pagination
-    cout << "Document paginated successfully!" << endl;
 
     return 0;
 }

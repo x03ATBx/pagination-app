@@ -78,4 +78,3 @@ they had achieved quantum supremacy with a 54-qubit machine, performing a
 computation that is impossible for any classical computer.[28][29][30] However,
 the validity of this claim is still being actively researched.[31][32]
 === Page 3 ===
-
